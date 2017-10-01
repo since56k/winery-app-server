@@ -1,9 +1,8 @@
-const express           = require('express');
-const router            = express.Router();
-const Company      = require('../../models/Company');
+const express = require('express');
+const router = express.Router();
+const Company = require('../../models/Company');
 
-//get all company
-
+/* GET Companies */
 router.get('/', (req, res, next) => {
   Company.find({}, (err, companies) => {
     console.log(res)
@@ -23,7 +22,7 @@ router.get('/:id', (req, res, next) => {
 });
 
 
-  //Post new company
+  /* POST new Company. */
 router.post('/newcompany', (req, res, next) => {
     const Company = new Company({
       name: req.body.name,
@@ -46,7 +45,7 @@ router.post('/newcompany', (req, res, next) => {
   });
   
 
-  //Update save Company
+  /* UPDATE Company */
 router.put('/update/:id', (req, res) => {
     if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
       res.status(400).json({ message: 'Specified id is not valid' });
@@ -72,7 +71,6 @@ router.put('/update/:id', (req, res) => {
     });
   })
   
-//Delete
 /* DELETE a Company. */
 router.delete('/delete/:id', (req, res) => {
     if(!mongoose.Types.ObjectId.isValid(req.params.id)) {

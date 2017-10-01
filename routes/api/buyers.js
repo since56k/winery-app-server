@@ -1,9 +1,8 @@
-const express    = require('express');
-const router     = express.Router();
-const Buyer      = require('../../models/Buyer');
+const express = require('express');
+const router = express.Router();
+const Buyer = require('../../models/Buyer');
 
-//get all buyer
-
+/* GET Buyers */
 router.get('/', (req, res, next) => {
   Buyer.find({}, (err, buyers) => {
     console.log(res)
@@ -15,15 +14,15 @@ router.get('/', (req, res, next) => {
 
 router.get('/:id', (req, res, next) => {
   Buyer.findById(req.params.id, (err, buyer) => {
-    if (err)         { return res.status(500).json(err); }
-    if (!buyer)      { return res.status(404).json(new Error("404")) }
+    if (err) { return res.status(500).json(err); }
+    if (!buyer) { return res.status(404).json(new Error("404")) }
 
     return res.json(buyer);
   });
 });
 
 
-  //Post new buyer
+/* POST new Buyer */
 router.post('/newbuyer', (req, res, next) => {
     const Buyer = new Buyer({
       name: req.body.name,
@@ -46,7 +45,7 @@ router.post('/newbuyer', (req, res, next) => {
   });
   
 
-  //Update save Buyer
+/* UPDATE Buyer */
 router.put('/update/:id', (req, res) => {
     if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
       res.status(400).json({ message: 'Specified id is not valid' });
@@ -72,8 +71,8 @@ router.put('/update/:id', (req, res) => {
     });
   })
   
-//Delete
-/* DELETE a Buyer. */
+
+/* DELETE Buyer */
 router.delete('/delete/:id', (req, res) => {
     if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
       res.status(400).json({ message: 'Specified id is not valid' });
