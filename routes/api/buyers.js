@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Buyer = require('../../models/User');
+const upload = require('../../config/multer');
 
 /* GET Buyers */
 router.get('/', (req, res, next) => {
@@ -22,27 +23,27 @@ router.get('/:id', (req, res, next) => {
 });
 
 
-/* POST new Buyer */
-router.post('/newbuyer', (req, res, next) => {
-    const Buyer = new Buyer({
-      name: req.body.name,
-      desc: req.body.desc,
-      specs: req.body.specs,
-      image: req.body.image || ''
-    });
-  
-    Buyer.save((err) => {
-      if (err) {
-        res.json(err);
-        return;
-      }
-  
-      res.json({
-        message: 'New buyer created!',
-        id: Buyer._id
-      });
+/* CREATE a new Buyer. */
+router.post('/newbuyer', upload.single('file'), function(req, res) {
+  const buyer = new Buyer({
+    username: req.body.username,
+    email: req.body.email,
+    role: req.body.role,
+    image: `/uploads/${req.file.filename}` || ''
+    
+  });
+
+  buyer.save((err) => {
+    if (err) {
+      return res.send(err);
+    }
+
+    return res.json({
+      message: 'New Buyer created!',
+      buyer: buyer
     });
   });
+});
   
 
 /* UPDATE Buyer */
