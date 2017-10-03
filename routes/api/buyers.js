@@ -74,23 +74,19 @@ router.put('/update/:id', (req, res) => {
   })
   
 
-/* DELETE Buyer */
-router.delete('/delete/:id', (req, res) => {
-    if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
-      res.status(400).json({ message: 'Specified id is not valid' });
-      return;
-    }
-    
-    Buyer.remove({ _id: req.params.id }, (err) => {
-      if (err) {
-        res.json(err);
-        return;
-      }
-  
-      return res.json({
-        message: 'Buyer has been removed!'
-      });
-    })
-  });
+/* DELETE a Buyer. */
+router.delete('/delete/:id', (req, res, next) => {
+    const id = req.params.id;
+
+    Company.findByIdAndRemove(id, (err, buyer) => {
+        if (err) {
+            res.json(err);
+            return;
+        }
+        return res.json({
+            message: 'Buyer has been removed!'
+        });
+    });
+});
 
 module.exports = router;
