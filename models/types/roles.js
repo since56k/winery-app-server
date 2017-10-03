@@ -1,6 +1,7 @@
 module.exports = [
   "Admin",
   "Buyer",
-  "Company"
+  "Company",
+  "Guest"
 ];
 

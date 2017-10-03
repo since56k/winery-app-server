@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const Company = require('../../models/Company');
+const Company = require('../../models/User');
 
 /* GET Companies */
 router.get('/', (req, res, next) => {
-  Company.find({}, (err, companies) => {
+  Company.find({role: { "$in" : ["Company"]}}, (err, companies) => {
     console.log(res)
     if (err) { return res.json(err).status(500); }
 

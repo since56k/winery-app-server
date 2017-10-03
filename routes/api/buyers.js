@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const Buyer = require('../../models/Buyer');
+const Buyer = require('../../models/User');
 
 /* GET Buyers */
 router.get('/', (req, res, next) => {
-  Buyer.find({}, (err, buyers) => {
+  Buyer.find({role: { "$in" : ["Buyer"]}}, (err, buyers) => {
     console.log(res)
     if (err) { return res.json(err).status(500); }
 
