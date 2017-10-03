@@ -5,6 +5,7 @@ const upload = require('../../config/multer');
 
 /* GET Buyers */
 router.get('/', (req, res, next) => {
+  
   Buyer.find({role: { "$in" : ["Buyer"]}}, (err, buyers) => {
     console.log(res)
     if (err) { return res.json(err).status(500); }
