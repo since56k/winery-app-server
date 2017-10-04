@@ -8,7 +8,8 @@ const ProductSchema = new Schema({
   type          : { type: String, required: true },
   year   				: { type: Number, required: true },
   organic    		: { type: Boolean, required: false, default: false },
-  date          : { type: Date, default: Date.now }
+  date          : { type: Date, default: Date.now },
+  
  
 });
 

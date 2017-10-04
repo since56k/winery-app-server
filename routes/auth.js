@@ -1,6 +1,6 @@
 const express      = require('express');
 const router       = express.Router();
-const authRoutes   = require('./auth/index');
+const authRoutes   = require('./auth/user-auth');
 
 router.use('/auth', authRoutes)
 

@@ -4,10 +4,11 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 
 const response = require('../../helpers/response');
-const User = require('../../models/User');
+const User = require('../../models/User')
 
 router.post('/signin', (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
+    console.log(user)
     if (err) {
       return next(err);
     }
@@ -24,21 +25,29 @@ router.post('/signin', (req, res, next) => {
 });
 
 router.post('/signup', (req, res, next) => {
+
+
+
   const {
     username,
     email,
     password
   } = req.body;
 
-  if (!username) {
-    return response.unprocessable(req, res, 'Missing mandatory field "Username".');
+   if (!username || !password || !email) {
+    res.json({ message: 'Provide username password email' });
+    return;
   }
-  if (!password) {
-    return response.unprocessable(req, res, 'Missing mandatory field "Password".');
-  }
-  if (!email) {
-    return response.unprocessable(req, res, 'Missing mandatory field "Email".');
-  }
+
+  // if (!username) {
+  //   return response.unprocessable(req, res, 'Missing mandatory field "Username".');
+  // }
+  // if (!password) {
+  //   return response.unprocessable(req, res, 'Missing mandatory field "Password".');
+  // }
+  // if (!email) {
+  //   return response.unprocessable(req, res, 'Missing mandatory field "Email".');
+  // }
 
   User.findOne({
     username

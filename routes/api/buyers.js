@@ -47,7 +47,7 @@ router.post('/newbuyer', upload.single('file'), function(req, res) {
 });
   
 
-/* UPDATE Buyer */
+/* NOT WORKS */
 router.put('/update/:id', (req, res) => {
     if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
       res.status(400).json({ message: 'Specified id is not valid' });
