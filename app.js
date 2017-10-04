@@ -10,15 +10,15 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const passport = require('passport');
 
-const routes = require('./routes/index');
+const routes = require('./routes/api');
+const auth = require('./routes/auth');
+
 const response = require('./helpers/response');
 const configure = require('./config/passport');
 
 require('./config/database');
 
 const app = express();
-
-
 
 app.use(session({
   secret: 'winery-app',
@@ -49,11 +49,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-
-// This will be the default route is nothing else is caught
-app.use(function(req, res) {
-  res.sendfile(__dirname + '/public/index.html');
-});
+app.use('/', auth);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -71,6 +67,11 @@ app.use(function(err, req, res, next) {
   if (!res.headersSent) {
     response.unexpectedError(req, res, err);
   }
+});
+
+// This will be the default route is nothing else is caught
+app.use(function(req, res) {
+  res.sendfile(__dirname + '/public/index.html');
 });
 
 module.exports = app;
