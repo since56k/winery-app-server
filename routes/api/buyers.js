@@ -78,7 +78,7 @@ router.put('/update/:id', (req, res) => {
 router.delete('/delete/:id', (req, res, next) => {
     const id = req.params.id;
 
-    Company.findByIdAndRemove(id, (err, buyer) => {
+    Buyer.findByIdAndRemove(id, (err, buyer) => {
         if (err) {
             res.json(err);
             return;
