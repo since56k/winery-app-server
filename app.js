@@ -24,10 +24,12 @@ app.use(session({
   secret: 'winery-app',
   resave: true,
   saveUninitialized: true,
+  cookie : { httpOnly: true, maxAge: 2419200000 },
   store: new MongoStore({
     mongooseConnection: mongoose.connection
   })
 }));
+
 
 //create a cors middleware
 app.use(cors({
