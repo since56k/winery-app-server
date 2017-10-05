@@ -13,13 +13,13 @@ router.post('/signin', (req, res, next) => {
       return next(err);
     }
     if (!user) {
-      return response.notFound(req, res);
+      return res.json({ message: 'Your credentials are wrong or you not exist' });
     }
     req.login(user, (err) => {
       if (err) {
         return next(err);
       }
-      return response.data(req, res, req.user);
+      return response.data(req, res, req.user.asData());
     });
   })(req, res, next);
 });
