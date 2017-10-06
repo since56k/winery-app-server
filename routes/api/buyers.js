@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Buyer = require('../../models/User');
+const Product = require('../../models/Product');
 const upload = require('../../config/multer');
 
 /* GET Buyers */
@@ -87,6 +88,35 @@ router.delete('/delete/:id', (req, res, next) => {
             message: 'Buyer has been removed!'
         });
     });
+});
+
+/* CART */
+
+/* GET cart product details. */
+router.get('/cart/:id', (req, res) => {
+
+  Buyer
+      .findOne({user_id: req.params.id})
+      .populate("current_cart.productId")
+      .exec((err, product) => {
+        if (err) {
+        res.json(err);
+        return;
+        }
+    res.json(product);
+
+  });
+
+  /* ADD Product on cart */
+
+router.put('/add', (req, res) => {
+  var userId = req.body.userId;
+  var item = req.body.cartItem;
+  
+  Buyer.findOneAndUpdate({user_id: userId}, {$push: { "current_cart": item }}, {new: true}, (err, product)=>{
+    res.send(product)
+      }) 
+     });
 });
 
 module.exports = router;
