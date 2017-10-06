@@ -4,13 +4,16 @@ const CAT = require('./types/categories');
 
 const ProductSchema = new Schema({
   name   				: { type: String, required: true },
-  category      : { type: String, enum: CAT, required: true, default: '' }
+  category      : { type: String, required: true, default: '' },
   type          : { type: String, required: true },
-  year   				: { type: Number, required: true },
+  year   				: { type: Date, required: false, default: Date.now }, 
   organic    		: { type: Boolean, required: false, default: false },
-  date          : { type: Date, default: Date.now },
-  
- 
+  image      : { type: String, default: '' },
+  }, {
+  timestamps: {
+    createdAt: 'created_at',
+    updatedAt: 'updated_at'
+  }
 });
 
 module.exports = mongoose.model('Product', ProductSchema);
