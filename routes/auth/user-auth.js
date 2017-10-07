@@ -26,8 +26,6 @@ router.post('/signin', (req, res, next) => {
 
 router.post('/signup', (req, res, next) => {
 
-
-
   const {
     username,
     email,

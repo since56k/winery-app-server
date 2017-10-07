@@ -9,7 +9,6 @@ const upload = require('../../config/multer');
 router.get('/', (req, res, next) => {
   
   Buyer.find({role: { "$in" : ["Buyer"]}}, (err, buyers) => {
-    console.log(res)
     if (err) { return res.json(err).status(500); }
 
     return res.json(buyers);
@@ -57,8 +56,6 @@ router.put('/update/:id', (req, res) => {
       email: req.body.email,
       role: req.body.role
     };
-
-    console.log(updates)
     
     Buyer.findByIdAndUpdate(req.params.id, updates, (err) => {
       if (err) {
@@ -91,18 +88,20 @@ router.delete('/delete/:id', (req, res, next) => {
 /* CART */
 
 // /* GET cart product details. */
-// router.get('/cart/:id', (req, res) => {
-//   Buyer
-//       .findOne({user_id: req.params.id})
-//       .populate("current_cart.productId")
-//       .exec((err, product) => {
-//         if (err) {
-//           res.json(err);
-//         return;
-//         }
-//       res.json(product);
+router.get('/cart/:id', (req, res) => {
+  console.log('test', req.params.id)
+  Buyer
+      .findById(req.params.id)
+      .exec((err, product) => {
+        if (err) {
+          res.json(err);
+        return;
+        }
+      res.json(product);
+      console.log('product', product);
 
-//   });
+  });
+});
 
 
 // /* PUT update buyer */
@@ -123,7 +122,6 @@ router.delete('/delete/:id', (req, res, next) => {
 
 
 router.put('/add/:id', (req, res) => {
-    console.log('test')
     var userId = req.params.id;
     
    const updates = {
@@ -134,7 +132,6 @@ router.put('/add/:id', (req, res) => {
   Buyer.findByIdAndUpdate(req.params.id, updates, (err) => {
      if (err) {
       res.json(err);
-      console.log(err)
       return;
     }
     res.json({
