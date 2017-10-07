@@ -16,3 +16,45 @@ user model
 //   res.setHeader('Access-Control-Allow-Credentials', true);
 //   next();
 // });
+
+
+// /* PUT update buyer */
+// router.put('/add/:id', (req, res) => {
+  
+//     console.log('testtest', req, res)
+//     Buyer.findByIdAndUpdate(req.params.id, req.body.name, (err) => {
+//       if (err) {
+//         res.json(err);
+//         return;
+//       }
+  
+//       res.json({
+//         message: 'Buyer updated successfully'
+//       });
+//     });
+//   })
+
+/* PUT Product to Cart. */
+
+// router.put('/addToCart', (req, res) => {
+//   var userId = req.body.userId;
+//   var item = req.body.cartItem;
+
+//   console.log(req.body.cartItem)
+  
+//   Behaviour.findOneAndUpdate({user_id: userId}, {$push: { "current_cart": item }}, {new: true}, (err, behaviour)=>{
+//     res.send(behaviour)
+//       }) 
+//      }
+//   )
+
+// collection.findByIdAndUpdate(
+//     1,
+//     {$push: {items: item}},
+//     {safe: true, upsert: true},
+//     function(err, model) {
+//         console.log(err);
+//     }
+// );
+
+
