@@ -6,7 +6,7 @@ const UserSchema = new Schema({
   username   : { type: String, required: true },
   email      : { type: String, required: true },
   password   : { type: String, required: true },
-  current_cart: { type: String },
+  cartItems :   [{type: Schema.Types.ObjectId, ref: 'Products'}],
   image      : { type: String, default: '' },
   role       : { type: String, enum: ROLES, required: false, default: 'Guest'},
   }, {
@@ -20,6 +20,9 @@ const UserSchema = new Schema({
     'city': String,
   },
 });
+
+
+
 
 
 UserSchema.methods.generateHash = function(password) {

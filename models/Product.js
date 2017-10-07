@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema   = mongoose.Schema;
+const User         = require('./User');
 const CAT = require('./types/categories');
 
 const ProductSchema = new Schema({
@@ -18,18 +19,18 @@ const ProductSchema = new Schema({
 });
 
 
-ProductSchema.methods.addProductId = function(cartItems, cb){
-  var userId = this.userId;
-  mongoose.models.User.findByIdAndUpdate(userId, {
-    $push: { cartItems: this._id }
-  }, (err) => {
-    if (!err){
-      return cb()
-    } else {
-      return cb(err);
-    }
-  })
-}
+// ProductSchema.methods.addProductId = function(cartItems, cb){
+//   var userId = this.userId;
+//   mongoose.models.User.findByIdAndUpdate(userId, {
+//     $push: { cartItems: this._id }
+//   }, (err) => {
+//     if (!err){
+//       return cb()
+//     } else {
+//       return cb(err);
+//     }
+//   })
+// }
 
 module.exports = mongoose.model('Product', ProductSchema);
 

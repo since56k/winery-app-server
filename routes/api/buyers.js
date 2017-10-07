@@ -89,7 +89,6 @@ router.delete('/delete/:id', (req, res, next) => {
 
 // /* GET cart product details. */
 router.get('/cart/:id', (req, res) => {
-  console.log('test', req.params.id)
   Buyer
       .findById(req.params.id)
       .exec((err, product) => {
@@ -120,16 +119,45 @@ router.get('/cart/:id', (req, res) => {
 //     });
 //   })
 
+/* PUT Product to Cart. */
+
+// router.put('/addToCart', (req, res) => {
+//   var userId = req.body.userId;
+//   var item = req.body.cartItem;
+
+//   console.log(req.body.cartItem)
+  
+//   Behaviour.findOneAndUpdate({user_id: userId}, {$push: { "current_cart": item }}, {new: true}, (err, behaviour)=>{
+//     res.send(behaviour)
+//       }) 
+//      }
+//   )
+
+// collection.findByIdAndUpdate(
+//     1,
+//     {$push: {items: item}},
+//     {safe: true, upsert: true},
+//     function(err, model) {
+//         console.log(err);
+//     }
+// );
+
 
 router.put('/add/:id', (req, res) => {
-    var userId = req.params.id;
+
+    let userId = req.params.id;
+    let itemId = req.body._id;
     
-   const updates = {
-      current_cart: req.body.name,
+   const item = {
+
+      name: req.body.name,
+      type: req.body.type,
     };
 
+    console.log('ITEMID', itemId)
+
   
-  Buyer.findByIdAndUpdate(req.params.id, updates, (err) => {
+  Buyer.findByIdAndUpdate(userId, {$push: { cartItems: itemId }}, (err) => {
      if (err) {
       res.json(err);
       return;
