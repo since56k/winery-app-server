@@ -3,21 +3,22 @@ const Schema   = mongoose.Schema;
 const ROLES = require('./types/roles');
 
 const UserSchema = new Schema({
-  user_id    : { type: Schema.Types.ObjectId },
   username   : { type: String, required: true },
   email      : { type: String, required: true },
   password   : { type: String, required: true },
-  current_cart: [{
-    'productId': {'type': Schema.Types.ObjectId, 'ref': 'Product'},
-    'quantity': Number,
-  }],
+  current_cart: { type: String },
   image      : { type: String, default: '' },
   role       : { type: String, enum: ROLES, required: false, default: 'Guest'},
   }, {
   timestamps: {
     createdAt: 'created_at',
     updatedAt: 'updated_at'
-  }
+  },
+  address: {
+    'street': String,
+    'postal_code': String,
+    'city': String,
+  },
 });
 
 

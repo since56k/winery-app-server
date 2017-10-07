@@ -79,6 +79,7 @@ router.post('/signup', (req, res, next) => {
         return response.data(req, res, newUser.asData());
       });
     });
+    
   });
 });
 

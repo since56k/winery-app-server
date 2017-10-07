@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Buyer = require('../../models/User');
+const UserAction = require('../../models/UserAction');
 const Product = require('../../models/Product');
 const upload = require('../../config/multer');
 
@@ -48,7 +49,7 @@ router.post('/newbuyer', upload.single('file'), function(req, res) {
 });
   
 
-/* NOT WORKS */
+/* PUT update buyer */
 router.put('/update/:id', (req, res) => {
   
     const updates = {
@@ -89,41 +90,58 @@ router.delete('/delete/:id', (req, res, next) => {
 
 /* CART */
 
-/* GET cart product details. */
-router.get('/cart/:id', (req, res) => {
-  Buyer
-      .findOne({user_id: req.params.id})
-      .populate("current_cart.productId")
-      .exec((err, product) => {
-        if (err) {
-          res.json(err);
-        return;
-        }
-      res.json(product);
+// /* GET cart product details. */
+// router.get('/cart/:id', (req, res) => {
+//   Buyer
+//       .findOne({user_id: req.params.id})
+//       .populate("current_cart.productId")
+//       .exec((err, product) => {
+//         if (err) {
+//           res.json(err);
+//         return;
+//         }
+//       res.json(product);
 
-  });
+//   });
 
-  /* ADD Product on cart */
 
-router.put('/add', (req, res) => {
-    var userId = req.body.userId;
-    
-   const updates = {  
-    current_cart: req.body.cartItem
-  };
-   console.log(updates);
+// /* PUT update buyer */
+// router.put('/add/:id', (req, res) => {
   
-  Buyer.findByIdAndUpdate(userId, updates, (err, product)=>{
+//     console.log('testtest', req, res)
+//     Buyer.findByIdAndUpdate(req.params.id, req.body.name, (err) => {
+//       if (err) {
+//         res.json(err);
+//         return;
+//       }
+  
+//       res.json({
+//         message: 'Buyer updated successfully'
+//       });
+//     });
+//   })
+
+
+router.put('/add/:id', (req, res) => {
+    console.log('test')
+    var userId = req.params.id;
+    
+   const updates = {
+      current_cart: req.body.name,
+    };
+
+  
+  Buyer.findByIdAndUpdate(req.params.id, updates, (err) => {
      if (err) {
       res.json(err);
+      console.log(err)
       return;
     }
     res.json({
-      message: 'Phone updated successfully'
+      message: 'Cart updated successfully'
       });
     });
   });
 
-});
 
 module.exports = router;
