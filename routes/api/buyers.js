@@ -50,17 +50,14 @@ router.post('/newbuyer', upload.single('file'), function(req, res) {
 
 /* NOT WORKS */
 router.put('/update/:id', (req, res) => {
-    if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
-      res.status(400).json({ message: 'Specified id is not valid' });
-      return;
-    }
   
     const updates = {
-      name: req.body.name,
-      desc: req.body.desc,
-      specs: req.body.specs,
-      image: req.body.image
+      username: req.body.username,
+      email: req.body.email,
+      role: req.body.role
     };
+
+    console.log(updates)
     
     Buyer.findByIdAndUpdate(req.params.id, updates, (err) => {
       if (err) {
@@ -94,29 +91,39 @@ router.delete('/delete/:id', (req, res, next) => {
 
 /* GET cart product details. */
 router.get('/cart/:id', (req, res) => {
-
   Buyer
       .findOne({user_id: req.params.id})
       .populate("current_cart.productId")
       .exec((err, product) => {
         if (err) {
-        res.json(err);
+          res.json(err);
         return;
         }
-    res.json(product);
+      res.json(product);
 
   });
 
   /* ADD Product on cart */
 
 router.put('/add', (req, res) => {
-  var userId = req.body.userId;
-  var item = req.body.cartItem;
+    var userId = req.body.userId;
+    
+   const updates = {  
+    current_cart: req.body.cartItem
+  };
+   console.log(updates);
   
-  Buyer.findOneAndUpdate({user_id: userId}, {$push: { "current_cart": item }}, {new: true}, (err, product)=>{
-    res.send(product)
-      }) 
-     });
+  Buyer.findByIdAndUpdate(userId, updates, (err, product)=>{
+     if (err) {
+      res.json(err);
+      return;
+    }
+    res.json({
+      message: 'Phone updated successfully'
+      });
+    });
+  });
+
 });
 
 module.exports = router;
