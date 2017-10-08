@@ -8,7 +8,6 @@ const User = require('../../models/User')
 
 router.post('/signin', (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
-    console.log(user)
     if (err) {
       return next(err);
     }

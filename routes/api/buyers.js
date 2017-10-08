@@ -136,9 +136,8 @@ router.put('/add/:id', (req, res) => {
       productId: req.body._id,
     };
 
-    console.log('ITEMID', userId, item)
 
-  Buyer.findByIdAndUpdate(req.params.id, {$push: { cartItems: item }}, (err) => {
+  Buyer.findByIdAndUpdate(userId, {$push: { cartItems: item }}, (err) => {
      if (err) {
       res.json(err);
       return;
@@ -148,6 +147,28 @@ router.put('/add/:id', (req, res) => {
       });
     });
   });
+
+/* DELETE item in cart. */
+
+/* PUT remove item from Cart */
+router.put('/cart/delete/', (req, res) => { 
+
+  let userId = req.body.userId;
+  let itemId = req.body.item;
+
+  console.log(req.body)
+  
+  Buyer.findByIdAndUpdate(userId, {$pull: { cartItems: { _id: itemId } } }, (err) => {
+     if (err) {
+      res.json(err);
+      return;
+    }
+    res.json({
+      message: 'Item in cart deleted successfully'
+      });
+    });
+  });
+
 
 
 module.exports = router;

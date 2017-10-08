@@ -6,7 +6,6 @@ const upload = require('../../config/multer');
 /* GET products */
 router.get('/', (req, res, next) => {
     Product.find({}, (err, product) => {
-        console.log(res)
         if (err) { return res.json(err).status(500); }
 
         return res.json(product);
@@ -30,7 +29,6 @@ router.post('/newproduct', upload.single('file'), (req, res) => {
         type: req.body.type,
         image: `/uploads/${req.file.filename}` || ''
     });
-    console.log(product)
     product.save((err) => {
         if (err) {
             
