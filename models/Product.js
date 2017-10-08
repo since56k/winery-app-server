@@ -19,18 +19,6 @@ const ProductSchema = new Schema({
 });
 
 
-// ProductSchema.methods.addProductId = function(cartItems, cb){
-//   var userId = this.userId;
-//   mongoose.models.User.findByIdAndUpdate(userId, {
-//     $push: { cartItems: this._id }
-//   }, (err) => {
-//     if (!err){
-//       return cb()
-//     } else {
-//       return cb(err);
-//     }
-//   })
-// }
 
 module.exports = mongoose.model('Product', ProductSchema);
 

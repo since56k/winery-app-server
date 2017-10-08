@@ -89,15 +89,16 @@ router.delete('/delete/:id', (req, res, next) => {
 
 // /* GET cart product details. */
 router.get('/cart/:id', (req, res) => {
+
   Buyer
       .findById(req.params.id)
+      .select('cartItems')
       .exec((err, product) => {
         if (err) {
           res.json(err);
         return;
         }
       res.json(product);
-      console.log('product', product);
 
   });
 });
