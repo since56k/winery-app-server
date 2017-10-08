@@ -102,21 +102,42 @@ router.get('/cart/:id', (req, res) => {
   });
 });
 
+/* POST new Company. */
+router.post('/newcompany', (req, res, next) => {
+    const company = new Company({
+        username: req.body.username,
+        email: req.body.email,
+        role: req.body.role,
+        image: req.body.image || ''
+    });
 
+    company.save((err) => {
+        if (err) {
+            res.json(err);
+            return;
+        }
+
+        return res.json({
+            message: 'New company created!',
+            company: company
+        });
+    });
+});
 
 router.put('/add/:id', (req, res) => {
 
     let userId = req.params.id;
     let itemId = req.body._id;
     
-   const item = {
+   const item = {   
+      type: req.body.type,
+      name: req.body.name,
       productId: req.body._id,
     };
 
-    console.log('ITEMID', itemId)
+    console.log('ITEMID', userId, item)
 
-  
-  Buyer.findByIdAndUpdate(userId, {$push: { cartItems: item }}, (err) => {
+  Buyer.findByIdAndUpdate(req.params.id, {$push: { cartItems: item }}, (err) => {
      if (err) {
       res.json(err);
       return;

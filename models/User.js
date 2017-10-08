@@ -7,8 +7,9 @@ const UserSchema = new Schema({
   email      : { type: String, required: true },
   password   : { type: String, required: true },
   cartItems :   [{
-    productId:  {type: Schema.Types.ObjectId, ref: 'Products'},
-   
+    productId:  {type: Schema.Types.ObjectId, ref: 'Product'},
+    name: { type: String, required: true },
+    type: { type: String, required: true },
   }],
   image      : { type: String, default: '' },
   role       : { type: String, enum: ROLES, required: false, default: 'Guest'},
