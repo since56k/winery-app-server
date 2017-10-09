@@ -136,16 +136,20 @@ router.put('/add/:id', (req, res) => {
       productId: req.body._id,
     };
 
-  Buyer.findByIdAndUpdate(userId, {$push: { cartItems: item }}, (err) => {
-     if (err) {
-      res.json(err);
-      return;
-    }
-    res.json({
-      message: 'Cart updated successfully'
+  Buyer.findByIdAndUpdate(userId,  
+    { $inc: { amount: 1 }, $push: { cartItems: item }},  
+    (err) => {
+      if (err) {
+        res.json(err);
+        return;
+      }
+      res.json({
+        message: 'Cart updated successfully'
+        });
       });
-    });
   });
+//
+//
 
 
 /* PUT remove item from Cart */
@@ -153,10 +157,9 @@ router.put('/cart/delete/', (req, res) => {
 
   let userId = req.body.userId;
   let itemId = req.body.item;
-
-  console.log(req.body)
   
-  Buyer.findByIdAndUpdate(userId, {$pull: { cartItems: { _id: itemId } } }, (err) => {
+  Buyer.findByIdAndUpdate(userId, 
+    { $inc: { amount: -1 }, $pull: { cartItems: { _id: itemId } } }, (err) => {
      if (err) {
       res.json(err);
       return;

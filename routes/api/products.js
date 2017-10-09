@@ -7,7 +7,6 @@ const upload = require('../../config/multer');
 router.get('/', (req, res, next) => {
     Product.find({}, (err, product) => {
         if (err) { return res.json(err).status(500); }
-
         return res.json(product);
     });
 });
