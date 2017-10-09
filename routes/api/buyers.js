@@ -91,14 +91,14 @@ router.delete('/delete/:id', (req, res, next) => {
 router.get('/cart/:id', (req, res) => {
   Buyer
       .findById(req.params.id)
-      .select('cartItems')
+      .select('amount cartItems')
       .exec((err, product) => {
         if (err) {
           res.json(err);
         return;
         }
+        console.log(product)
       res.json(product);
-
   });
 });
 
