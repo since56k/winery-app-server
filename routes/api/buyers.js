@@ -7,7 +7,6 @@ const upload = require('../../config/multer');
 
 /* GET Buyers */
 router.get('/', (req, res, next) => {
-  
   Buyer.find({role: { "$in" : ["Buyer"]}}, (err, buyers) => {
     if (err) { return res.json(err).status(500); }
 
@@ -15,6 +14,7 @@ router.get('/', (req, res, next) => {
   });
 });
 
+/* GET Specific Buyers */
 router.get('/:id', (req, res, next) => {
   Buyer.findById(req.params.id, (err, buyer) => {
     if (err) { return res.status(500).json(err); }
@@ -89,7 +89,6 @@ router.delete('/delete/:id', (req, res, next) => {
 
 // /* GET cart product details. */
 router.get('/cart/:id', (req, res) => {
-
   Buyer
       .findById(req.params.id)
       .select('cartItems')
@@ -125,6 +124,7 @@ router.post('/newcompany', (req, res, next) => {
     });
 });
 
+/*Add new intem in cart*/
 router.put('/add/:id', (req, res) => {
 
     let userId = req.params.id;
@@ -135,7 +135,6 @@ router.put('/add/:id', (req, res) => {
       name: req.body.name,
       productId: req.body._id,
     };
-
 
   Buyer.findByIdAndUpdate(userId, {$push: { cartItems: item }}, (err) => {
      if (err) {
@@ -148,7 +147,6 @@ router.put('/add/:id', (req, res) => {
     });
   });
 
-/* DELETE item in cart. */
 
 /* PUT remove item from Cart */
 router.put('/cart/delete/', (req, res) => { 

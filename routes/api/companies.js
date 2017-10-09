@@ -12,6 +12,7 @@ router.get('/', (req, res, next) => {
     });
 });
 
+/* GET certain Company*/
 router.get('/:id', (req, res, next) => {
     Company.findById(req.params.id, (err, company) => {
         if (err) { return res.status(500).json(err); }
@@ -20,7 +21,6 @@ router.get('/:id', (req, res, next) => {
         return res.json(company);
     });
 });
-
 
 /* POST new Company. */
 router.post('/newcompany', (req, res, next) => {
@@ -85,8 +85,6 @@ router.delete('/delete/:id', (req, res, next) => {
         });
     });
 });
-
-
 
 
 

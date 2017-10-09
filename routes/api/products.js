@@ -3,7 +3,7 @@ const router = express.Router();
 const Product = require('../../models/Product');
 const upload = require('../../config/multer');
 
-/* GET products */
+/* GET all database products*/
 router.get('/', (req, res, next) => {
     Product.find({}, (err, product) => {
         if (err) { return res.json(err).status(500); }
@@ -12,21 +12,27 @@ router.get('/', (req, res, next) => {
     });
 });
 
-router.get('/:id', (req, res, next) => {
-    Product.findById(req.params.id, (err, product) => {
-        if (err) { return res.status(500).json(err); }
-        if (!product) { return res.status(404).json(new Error("404")) }
-
-        return res.json(product);
-    });
+/* GET products refered a specific Company*/
+router.get('/myproducts/:company', (req, res, next) => {
+        Product.find({ 'userId': req.params.company })
+        .exec((err, product) => {
+            if (err) {
+              res.json(err);
+              return;
+            }
+        console.log(product)
+        res.json(product);
+        });
 });
 
-/* POST new Product. */
+/* POST new Product for specific Company */
 router.post('/newproduct', upload.single('file'), (req, res) => {
+
     const product = new Product({
         name: req.body.name,
         category: req.body.category,
         type: req.body.type,
+        userId: req.body.userId,
         image: `/uploads/${req.file.filename}` || ''
     });
     product.save((err) => {
@@ -42,7 +48,6 @@ router.post('/newproduct', upload.single('file'), (req, res) => {
         });
     });
 });
-
 
 /* UPDATE product */
 router.put('/update/:id', (req, res) => {

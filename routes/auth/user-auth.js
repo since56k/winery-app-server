@@ -33,10 +33,8 @@ router.post('/signup', (req, res, next) => {
   } = req.body;
 
    if (!username || !password || !email || !role) {
-    res.json({ message: 'Provide username password email' });
-    return false;
+    return res.json({ message: 'Provide username password email' }); 
   }
-
   // if (!username) {
   //   return response.unprocessable(req, res, 'Missing mandatory field "Username".');
   // }
@@ -47,14 +45,13 @@ router.post('/signup', (req, res, next) => {
   //   return response.unprocessable(req, res, 'Missing mandatory field "Email".');
   // }
 
-  User.findOne({
-    username
-  }, 'username', (err, userExists) => {
+  //we have to handle also the email with User.find()
+  User.findOne({ username }, 'username', (err, userExists) => {
     if (err) {
       return next(err);
     }
     if (userExists) {
-      return response.unprocessable(req, res, 'Username already in use.');
+      return res.json({ message: 'Your data already exist in database' }); 
     }
 
     const salt = bcrypt.genSaltSync(10);
