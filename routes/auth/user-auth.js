@@ -28,12 +28,13 @@ router.post('/signup', (req, res, next) => {
   const {
     username,
     email,
+    role,
     password
   } = req.body;
 
-   if (!username || !password || !email) {
+   if (!username || !password || !email || !role) {
     res.json({ message: 'Provide username password email' });
-    return;
+    return false;
   }
 
   // if (!username) {
@@ -62,6 +63,7 @@ router.post('/signup', (req, res, next) => {
     const newUser = User({
       username,
       email,
+      role,
       password: hashPass
     });
 
