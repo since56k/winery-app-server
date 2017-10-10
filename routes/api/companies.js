@@ -51,16 +51,12 @@ router.post('/newcompany', upload.single('file'), function(req, res) {
 
 /* UPDATE Company */
 router.put('/update/:id', (req, res) => {
-    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-        res.status(400).json({ message: 'Specified id is not valid' });
-        return;
-    }
 
     const updates = {
-        name: req.body.name,
-        desc: req.body.desc,
-        specs: req.body.specs,
-        image: req.body.image
+        username: req.body.username,
+        email: req.body.email,
+        organic: req.body.organic,
+        website: req.body.website,
     };
 
     Company.findByIdAndUpdate(req.params.id, updates, (err) => {

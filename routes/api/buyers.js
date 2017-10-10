@@ -131,6 +131,7 @@ router.put('/add/:id', (req, res) => {
     let itemId = req.body._id;
     
    const item = {   
+      price: req.body.price,
       type: req.body.type,
       name: req.body.name,
       productId: req.body._id,
