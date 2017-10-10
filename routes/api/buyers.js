@@ -102,27 +102,6 @@ router.get('/cart/:id', (req, res) => {
   });
 });
 
-/* POST new Company. */
-router.post('/newcompany', (req, res, next) => {
-    const company = new Company({
-        username: req.body.username,
-        email: req.body.email,
-        role: req.body.role,
-        image: req.body.image || ''
-    });
-
-    company.save((err) => {
-        if (err) {
-            res.json(err);
-            return;
-        }
-
-        return res.json({
-            message: 'New company created!',
-            company: company
-        });
-    });
-});
 
 /*Add new intem in cart*/
 router.put('/add/:id', (req, res) => {

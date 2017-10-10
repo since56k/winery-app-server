@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const Company = require('../../models/User');
+const bcrypt = require('bcrypt');
+const bcryptSalt = 10;
 const upload = require('../../config/multer');
 
 /* GET Companies */
 router.get('/', (req, res, next) => {
     Company.find({ role: { "$in": ["Company"] } }, (err, companies) => {
-        console.log(res)
         if (err) { return res.json(err).status(500); }
 
         return res.json(companies);
@@ -25,15 +26,19 @@ router.get('/:id', (req, res, next) => {
 
 /* POST new Company. */
 router.post('/newcompany', upload.single('file'), function(req, res) {
+
   const company = new Company({
     username: req.body.username,
     email: req.body.email,
     role: req.body.role,
     organic: req.body.organic,
-    password: req.body.password,
     image: `/uploads/${req.file.filename}` || ''
     
   });
+
+  if (req.body.password) {
+      company.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(bcryptSalt));
+    }
 
   company.save((err) => {
     if (err) {
@@ -44,7 +49,6 @@ router.post('/newcompany', upload.single('file'), function(req, res) {
       message: 'New Company created!',
       company: company
     });
-    console.log(company)
   });
 });
 
@@ -56,8 +60,13 @@ router.put('/update/:id', (req, res) => {
         username: req.body.username,
         email: req.body.email,
         organic: req.body.organic,
+        password: '',
         website: req.body.website,
     };
+
+    if (req.body.password) {
+      updates.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(bcryptSalt));
+    }
 
     Company.findByIdAndUpdate(req.params.id, updates, (err) => {
         if (err) {
