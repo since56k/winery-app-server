@@ -31,6 +31,7 @@ router.post('/newbuyer', upload.single('file'), function(req, res) {
     username: req.body.username,
     email: req.body.email,
     role: req.body.role,
+    password: req.body.password,
     image: `/uploads/${req.file.filename}` || ''
     
   });

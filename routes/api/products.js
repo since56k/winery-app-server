@@ -31,6 +31,7 @@ router.post('/newproduct', upload.single('file'), (req, res) => {
         name: req.body.name,
         category: req.body.category,
         type: req.body.type,
+        organic: req.body.organic,
         userId: req.body.userId,
         image: `/uploads/${req.file.filename}` || ''
     });
@@ -88,9 +89,6 @@ router.delete('/delete/:id', (req, res, next) => {
         });
     });
 });
-
-
-
 
 
 module.exports = router;
