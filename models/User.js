@@ -6,6 +6,7 @@ const UserSchema = new Schema({
   username   : { type: String, required: true },
   email      : { type: String, required: true },
   password   : { type: String, required: true },
+  organic    : { type: Boolean, required: false, default: false },
   amount: { type: Number, default: 0 },
   cartItems :   [{
     productId:  {type: Schema.Types.ObjectId, ref: 'Product'},

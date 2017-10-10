@@ -10,6 +10,7 @@ const ProductSchema = new Schema({
   year   				: { type: Date, required: false, default: Date.now }, 
   organic    		: { type: Boolean, required: false, default: false },
   image         : { type: String, required: false, default: '../uploads' },
+  price         : { type: Number, required: true },
   }, {
   timestamps: {
     createdAt: 'created_at',

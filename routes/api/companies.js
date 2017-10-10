@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Company = require('../../models/User');
+const upload = require('../../config/multer');
 
 /* GET Companies */
 router.get('/', (req, res, next) => {
@@ -23,25 +24,28 @@ router.get('/:id', (req, res, next) => {
 });
 
 /* POST new Company. */
-router.post('/newcompany', (req, res, next) => {
-    const company = new Company({
-        username: req.body.username,
-        email: req.body.email,
-        role: req.body.role,
-        image: req.body.image || ''
-    });
+router.post('/newcompany', upload.single('file'), function(req, res) {
+  const company = new Company({
+    username: req.body.username,
+    email: req.body.email,
+    role: req.body.role,
+    organic: req.body.organic,
+    password: req.body.password,
+    image: `/uploads/${req.file.filename}` || ''
+    
+  });
 
-    company.save((err) => {
-        if (err) {
-            res.json(err);
-            return;
-        }
+  company.save((err) => {
+    if (err) {
+      return res.send(err);
+    }
 
-        return res.json({
-            message: 'New company created!',
-            company: company
-        });
+    return res.json({
+      message: 'New Company created!',
+      company: company
     });
+    console.log(company)
+  });
 });
 
 

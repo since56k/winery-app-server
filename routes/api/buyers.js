@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const Buyer = require('../../models/User');
-const UserAction = require('../../models/UserAction');
 const Product = require('../../models/Product');
 const upload = require('../../config/multer');
 

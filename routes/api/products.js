@@ -33,6 +33,7 @@ router.post('/newproduct', upload.single('file'), (req, res) => {
         type: req.body.type,
         organic: req.body.organic,
         userId: req.body.userId,
+        price: req.body.price,
         image: `/uploads/${req.file.filename}` || ''
     });
     product.save((err) => {
