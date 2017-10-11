@@ -11,6 +11,16 @@ router.get('/', (req, res, next) => {
     });
 });
 
+/* GET certain Product*/
+router.get('/:id', (req, res, next) => {
+    Product.findById(req.params.id, (err, product) => {
+        if (err) { return res.status(500).json(err); }
+        if (!product) { return res.status(404).json(new Error("404")) }
+
+        return res.json(product);
+    });
+});
+
 /* GET products refered a specific Company*/
 router.get('/myproducts/:company', (req, res, next) => {
         Product.find({ 'userId': req.params.company })
